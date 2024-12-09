@@ -22,11 +22,11 @@
                     <td>{{ rapport.Employe.nomEmploye }} {{ rapport.Employe.prenomEmploye }}</td>
                     <td>
                         <!-- Bouton pour mettre à jour le rapport -->
-                        <button class="btn btn-primary" @click="update(rapport.idRapport)">Update</button>
+                        <button class="btn btn-primary" @click="update(rapport.idRapport)">Modifier</button>
                         <!-- Bouton pour voir les détails du rapport -->
                         <button class="btn btn-success" @click="goToDetails(rapport.idRapport)">Details</button>
                         <!-- Bouton pour supprimer le rapport -->
-                        <button class="btn btn-danger" @click="supprimer(rapport.idRapport)">Delete</button>
+                        <button class="btn btn-danger" @click="supprimer(rapport.idRapport)">Supprimer</button>
                     </td>
                 </tr>
             </tbody>
