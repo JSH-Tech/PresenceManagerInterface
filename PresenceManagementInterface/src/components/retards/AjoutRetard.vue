@@ -24,7 +24,7 @@
                 <textarea class="form-control" id="justificationRetard" v-model="retard.justificationRetard"></textarea>
             </div>
             <!-- Bouton de soumission -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </main>
 </template>

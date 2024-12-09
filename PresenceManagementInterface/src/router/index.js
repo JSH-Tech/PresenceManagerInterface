@@ -2,14 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import home from '@/components/home.vue'
 import AjoutRapport from '@/components/rapports/AjoutRapport.vue'
 import ModifierRapport from '@/components/rapports/ModifierRapport.vue'
-
 import AjoutEmployes from '@/components/Employes/AjoutEmployes.vue'
 import ModifierEmployes from '@/components/Employes/ModifierEmployes.vue'
 
 import AjoutDemandesConges from '@/components/demandeConges/AjoutDemandesConges.vue'
 import ModifierDemandesConges from '@/components/demandesConges/ModifierDemandesConges.vue'
-
-
+import Login from '@/components/auth/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,7 +30,7 @@ const router = createRouter({
       name: 'ModifierRapport',
       component: ModifierRapport,
     },
-
+    
     //Route ajout employé
     {
       path: '/ajoutEmployes',
@@ -57,6 +55,12 @@ const router = createRouter({
       name: 'ModifierDemandesConges',
       component: ModifierDemandesConges,
     },
+    
+    {
+      path:'/login',
+      name:'login',
+      component: Login,
+    }
   ],
 })
 
