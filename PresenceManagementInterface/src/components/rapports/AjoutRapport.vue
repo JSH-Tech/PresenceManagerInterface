@@ -19,7 +19,7 @@
                 <textarea class="form-control" id="contenuRapport" v-model="rapport.contenuRapport"></textarea>
             </div>
             <!-- Bouton pour soumettre le formulaire -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </main>
 </template>
