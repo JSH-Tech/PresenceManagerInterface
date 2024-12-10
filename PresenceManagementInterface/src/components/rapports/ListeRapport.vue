@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main class="container">
         <h1>Liste des rapports</h1>
         <table class="table table-striped">
             <thead>
@@ -19,7 +19,7 @@
                     <td>{{ rapport.periodeRapport }}</td>
                     <td>{{ rapport.dateRapport }}</td>
                     <td>{{ rapport.contenuRapport }}</td>
-                    <td>{{ rapport.Employe.nomEmploye }} {{ rapport.Employe.prenomEmploye }}</td>
+                    <td>{{ rapport?.Employe?.nomEmploye }} {{ rapport?.Employe?.prenomEmploye }}</td>
                     <td>
                         <!-- Bouton pour mettre à jour le rapport -->
                         <button class="btn btn-primary" @click="update(rapport.idRapport)">Modifier</button>
@@ -63,14 +63,19 @@ const supprimer = id => {
 
 // Fonction pour rediriger vers la page de mise à jour du rapport
 const update = (id) => {
-    router.push(`/update-rapport/${id}`)
+    router.push(`/ajout-rapport/${id}`)
 }
 
 // Chargement des rapports avant le montage du composant
 onBeforeMount(() => {
+    console.log(import.meta.env.VITE_BASE_URL);
+    
     getAllRapports()
-        .then((res) => listeRapports.value = res.data)
-        .catch(err => console.log(err))
+    .then((res) => {
+        console.log(res.data);  // Vérifiez la structure des données ici
+        listeRapports.value = res.data
+    })
+    .catch(err => console.log(err))
 })
 
 // Fonction pour rediriger vers la page de détails du rapport

@@ -16,9 +16,9 @@
             Retards
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Ajout</a></li>
+            <li><RouterLink class="dropdown-item" to="/ajout-retard">Ajout</RouterLink></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Liste</a></li>
+            <li><RouterLink class="dropdown-item" to="/liste-retard">Liste</RouterLink></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -26,9 +26,9 @@
             Congés
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Ajout</a></li>
+            <li><RouterLink class="dropdown-item" to="/ajout-Conge">Ajout</RouterLink></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Liste</a></li>
+            <li><RouterLink class="dropdown-item" to="/liste-conge">Liste</RouterLink></li>
           </ul>
         </li>
       <li class="nav-item dropdown">
@@ -36,9 +36,9 @@
             Absences
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Ajout</a></li>
+            <li><RouterLink class="dropdown-item" to="/ajout-absence">Ajout</RouterLink></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Liste</a></li>
+            <li><RouterLink class="dropdown-item" to="/liste-absences">Liste</RouterLink></li>
           </ul>
         </li>
       <li class="nav-item dropdown">
@@ -46,9 +46,9 @@
             Rapports
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Ajout</a></li>
+            <li><RouterLink class="dropdown-item" to="/ajout-rapport">Ajout</RouterLink></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Liste</a></li>
+            <li><RouterLink class="dropdown-item" to="/liste-rapport">Liste</RouterLink></li>
           </ul>
         </li>
       <li class="nav-item dropdown">
@@ -56,9 +56,9 @@
             Employe
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Ajout</a></li>
+            <li><RouterLink class="dropdown-item" to="/ajout-employe">Ajout</RouterLink></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Liste</a></li>
+            <li><RouterLink class="dropdown-item" to="/liste-employe">Liste</RouterLink></li>
           </ul>
         </li>
       <li class="nav-item dropdown">
@@ -66,9 +66,9 @@
             Types
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Ajout</a></li>
+            <li><RouterLink class="dropdown-item" to="/ajout-type">Ajout</RouterLink></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Liste</a></li>
+            <li><RouterLink class="dropdown-item" to="/liste-type">Liste</RouterLink></li>
           </ul>
         </li>
       </ul>
@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { RouterLink, RouterView } from 'vue-router';
+
 export default {
     name: 'Home'
 }

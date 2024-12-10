@@ -1,38 +1,42 @@
 <template>
-    <main>
-        <h1>Ajouter un rapport</h1>
-        <!-- Formulaire pour ajouter un rapport -->
-        <form @submit.prevent="soumettre" enctype="multipart/form-data">
+    <main class="container">
+        <h1>Ajout d'un Rapport</h1>
+        <form @submit.prevent="submit">
             <div class="mb-3">
-                <label for="periodeRapport" class="form-label">Période du rapport</label>
-                <!-- Champ de saisie pour la période du rapport -->
-                <input type="text" class="form-control" id="periodeRapport" v-model="rapport.periodeRapport">
+                <label for="periodeRapport" class="form-label">Période du Rapport</label>
+                <input v-model="rapport.periodeRapport" type="text" class="form-control" id="periodeRapport" required>
             </div>
             <div class="mb-3">
-                <label for="dateRapport" class="form-label">Date du rapport</label>
-                <!-- Champ de saisie pour la date du rapport -->
-                <input type="date" class="form-control" id="dateRapport" v-model="rapport.dateRapport">
+                <label for="dateRapport" class="form-label">Date du Rapport</label>
+                <input v-model="rapport.dateRapport" type="date" class="form-control" id="dateRapport" required>
             </div>
             <div class="mb-3">
-                <label for="contenuRapport" class="form-label">Contenu du rapport</label>
-                <!-- Champ de saisie pour le contenu du rapport -->
-                <textarea class="form-control" id="contenuRapport" v-model="rapport.contenuRapport"></textarea>
+                <label for="contenuRapport" class="form-label">Contenu</label>
+                <textarea v-model="rapport.contenuRapport" class="form-control" id="contenuRapport" rows="5" required></textarea>
             </div>
-            <!-- Bouton pour soumettre le formulaire -->
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <div class="mb-3">
+                <label for="idEmploye" class="form-label">Employé</label>
+                <select v-model="rapport.idEmploye" class="form-select" id="idEmploye" required>
+                    <option v-for="employe in employes" :key="employe.idEmploye" :value="employe.idEmploye">
+                        {{ employe.nomEmploye }} {{ employe.prenomEmploye }}
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
     </main>
 </template>
 
 <script setup>
 // Importation des fonctions nécessaires de Vue et Vue Router
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import useRapport from '@/services/serviceRapport';
+import axios from 'axios';
+import { onBeforeMount, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
-// Extraction de la fonction addRapport du service
-const { addRapport } = useRapport();
 const router = useRouter();
+const route = useRoute();
+
+const { id } = route.params;
 
 // Définition de l'objet rapport avec des valeurs initiales nulles
 const rapport = ref({
@@ -41,24 +45,67 @@ const rapport = ref({
     contenuRapport: null,
 });
 
-// Fonction pour soumettre le formulaire
-const soumettre = () => {
-    const formData = new FormData();
+const employes = ref([]); // Liste des employés
 
-    // Ajout des valeurs du rapport au FormData
-    for (let clef in rapport.value) {
-        formData.set(clef, rapport.value[clef]);
+// Fonction pour récupérer les employés
+const fetchEmployes = async () => {
+  try {
+    const response = await axios.get(import.meta.env.VITE_BASE_URL + '/employes/listEmployes');
+    employes.value = response.data.data;
+  } catch (error) {
+    console.error('Erreur lors du chargement des employés:', error);
+  }
+};
+
+// Fonction pour soumettre le formulaire
+const submit = () => {
+    const url = !id 
+        ? import.meta.env.VITE_BASE_URL + '/rapports/ajout' 
+        : import.meta.env.VITE_BASE_URL + '/rapports/modifier/' + id;
+
+    if (!id) {
+        axios.post(url, rapport.value)
+  .then(() => {
+      alert('Rapport ajouté avec succès.');
+      router.push('/');
+  })
+  .catch(err => {
+      if (err.response && err.response.status === 400) {
+          alert('Erreur : ' + err.response.data.message);
+      } else {
+          console.error(err);
+      }
+  });
+    }else{
+        axios.put(url, rapport.value)
+  .then(() => {
+      alert('Rapport ajouté avec succès.');
+      router.push('/');
+  })
+  .catch(err => {
+      if (err.response && err.response.status === 400) {
+          alert('Erreur : ' + err.response.data.message);
+      } else {
+          console.error(err);
+      }
+  });
+    }
+};
+
+// Chargement des données si un ID est présent dans l'URL
+onBeforeMount(() => {
+    if (id) {
+        const url = import.meta.env.VITE_BASE_URL + '/rapports/listRapports' + id;
+        axios.get(url)
+            .then(res => {
+                rapport.value = res.data;
+            })
+            .catch(err => console.error(err));
     }
 
-    // Appel de la fonction addRapport avec les données du formulaire
-    addRapport(formData)
-        .then(res => {
-            console.log(res);
-            // Redirection vers la page d'accueil après succès
-            router.push('/');
-        })
-        .catch(err => {
-            console.log("Problème lors de l'ajout", err);
-        });
-};
+    fetchEmployes();
+});
+
 </script>
+
+
