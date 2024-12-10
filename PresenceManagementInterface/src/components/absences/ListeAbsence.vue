@@ -66,6 +66,8 @@ const modifier = (id) => {
      
 // Fonction pour supprimer une absence
 
+// Avoir
+
 const supprimer = async (id) => {
     const url1='http://localhost:5000/api/absence/supprimerAbsence/'+id
     
