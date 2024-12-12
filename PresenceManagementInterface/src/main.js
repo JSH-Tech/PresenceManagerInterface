@@ -10,8 +10,9 @@ import router from './router'
 
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle'
+import Menu from './components/menu.vue'
 const app = createApp(App)
-
+app.component("Menu", Menu)
 const pinia = createPinia()
 pinia.use(piniaPersist)
 //app.use(createPinia())

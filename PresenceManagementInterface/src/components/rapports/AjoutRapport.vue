@@ -1,4 +1,6 @@
 <template>
+    <!-- Ajouter la vue home.vue -->
+     <Menu/>
     <main class="container">
         <h1>Ajout d'un Rapport</h1>
         <form @submit.prevent="submit">
@@ -16,13 +18,16 @@
             </div>
             <div class="mb-3">
                 <label for="idEmploye" class="form-label">Employé</label>
-                <select v-model="rapport.idEmploye" class="form-select" id="idEmploye" required>
+                <select v-model="rapport.idEmploye_Rapports" class="form-select" id="idEmploye" required>
                     <option v-for="employe in employes" :key="employe.idEmploye" :value="employe.idEmploye">
                         {{ employe.nomEmploye }} {{ employe.prenomEmploye }}
                     </option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Envoyer</button>
+            
+            <button class="btn btn-danger" @click="goToRapports">Retour</button>
+
         </form>
     </main>
 </template>
@@ -43,6 +48,7 @@ const rapport = ref({
     periodeRapport: null,
     dateRapport: null,
     contenuRapport: null,
+    idEmploye_Rapports: null,
 });
 
 const employes = ref([]); // Liste des employés
@@ -56,41 +62,29 @@ const fetchEmployes = async () => {
     console.error('Erreur lors du chargement des employés:', error);
   }
 };
+// Fonction pour rediriger vers la liste des rapports
+const goToRapports = () => {
+  router.push('/liste-rapport');
+};
 
 // Fonction pour soumettre le formulaire
 const submit = () => {
-    const url = !id 
-        ? import.meta.env.VITE_BASE_URL + '/rapports/ajout' 
-        : import.meta.env.VITE_BASE_URL + '/rapports/modifier/' + id;
-
-    if (!id) {
-        axios.post(url, rapport.value)
-  .then(() => {
-      alert('Rapport ajouté avec succès.');
-      router.push('/');
-  })
-  .catch(err => {
-      if (err.response && err.response.status === 400) {
-          alert('Erreur : ' + err.response.data.message);
-      } else {
-          console.error(err);
-      }
-  });
-    }else{
-        axios.put(url, rapport.value)
-  .then(() => {
-      alert('Rapport ajouté avec succès.');
-      router.push('/');
-  })
-  .catch(err => {
-      if (err.response && err.response.status === 400) {
-          alert('Erreur : ' + err.response.data.message);
-      } else {
-          console.error(err);
-      }
-  });
+    const url = import.meta.env.VITE_BASE_URL + '/rapports/ajout';
+    if (!rapport.value.idEmploye_Rapports) {
+        alert('Veuillez sélectionner un employé');
+        return;
     }
+    axios.post(url, rapport.value);
+    alert('Rapport ajouté avec succès.');
+    rapport.value = {
+            periodeRapport: null,
+            dateRapport: null,
+            contenuRapport: null,
+            idEmploye_Rapports: null,
+        };
+    router.push('/ajout-rapport');
 };
+
 
 // Chargement des données si un ID est présent dans l'URL
 onBeforeMount(() => {

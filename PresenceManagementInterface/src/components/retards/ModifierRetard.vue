@@ -1,5 +1,6 @@
 <template>
-    <main>
+    <Menu/> 
+    <main class="container">
         <h1>Modifier le retard</h1>
         <!-- Formulaire pour modifier les détails du retard -->
         <form @submit.prevent="soumettre" enctype="multipart/form-data">

@@ -1,5 +1,6 @@
 <template>
-    <main>
+    <Menu />
+    <main class="container">
         <!-- Titre principal de la page -->
         <h1>Liste des retards</h1>
         <!-- Tableau pour afficher la liste des retards -->

@@ -1,4 +1,5 @@
 <template>
+    <Menu/>
     <main class="container">
         <h1>Liste des rapports</h1>
         <table class="table table-striped">
@@ -24,7 +25,7 @@
                         <!-- Bouton pour mettre à jour le rapport -->
                         <button class="btn btn-primary" @click="update(rapport.idRapport)">Modifier</button>
                         <!-- Bouton pour voir les détails du rapport -->
-                        <button class="btn btn-success" @click="goToDetails(rapport.idRapport)">Details</button>
+                        <!-- <button class="btn btn-success" @click="goToDetails(rapport.idRapport)">Details</button> -->
                         <!-- Bouton pour supprimer le rapport -->
                         <button class="btn btn-danger" @click="supprimer(rapport.idRapport)">Supprimer</button>
                     </td>
@@ -50,20 +51,30 @@ const router = useRouter()
 
 // Fonction pour supprimer un rapport
 const supprimer = id => {
-    deleteRapport(id)
-        .then((res) => {
-            console.log('suppression', res)
-            // Mise à jour de la liste des rapports après suppression
-            getAllRapports()
-                .then((res) => listeRapports.value = res.data)
-                .catch(err => console.log(err))
-        })
-        .catch(err => console.log(err))
+    // Affichage de la boîte de dialogue de confirmation
+    const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce rapport ?");
+
+    // Si l'utilisateur confirme la suppression
+    if (confirmation) {
+        deleteRapport(id)
+            .then((res) => {
+                console.log('suppression', res);
+                // Mise à jour de la liste des rapports après suppression
+                getAllRapports()
+                    .then((res) => listeRapports.value = res.data)
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+    } else {
+        // Si l'utilisateur annule la suppression, on affiche un message ou on fait autre chose
+        console.log("Suppression annulée");
+    }
 }
+
 
 // Fonction pour rediriger vers la page de mise à jour du rapport
 const update = (id) => {
-    router.push(`/ajout-rapport/${id}`)
+    router.push(`/modifier-rapport/${id}`)
 }
 
 // Chargement des rapports avant le montage du composant
